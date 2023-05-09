@@ -50,48 +50,48 @@ function getRandomListElement<Type> (list: Type[]) : Type {
 // If a probability is included, elements will have that chance to be
 // added, otherwise null will appear in their place
 function makeRandomList<Type>(
-        list: Type[], 
-        length: number, 
-        probability: number = 1
-    ): (Type | null)[] {
-        if (!(probability >= 0 && probability <= 1)) {
-            throw new Error('Probability must be between 0 and 1');
-        }
+    list: Type[], 
+    length: number, 
+    probability: number = 1
+): (Type | null)[] {
+    if (!(probability >= 0 && probability <= 1)) {
+        throw new Error('Probability must be between 0 and 1');
+    }
 
-        const randomList: (Type | null)[] = [];
-        let roll: number;
-        for (let i = 0; i < length; i++) {
-            roll = Math.random();
-            if (roll <= probability) {
-                randomList.push(getRandomListElement(list));
-            } else {
-                randomList.push(null);
-            }
+    const randomList: (Type | null)[] = [];
+    let roll: number;
+    for (let i = 0; i < length; i++) {
+        roll = Math.random();
+        if (roll <= probability) {
+            randomList.push(getRandomListElement(list));
+        } else {
+            randomList.push(null);
         }
+    }
 
-        return randomList;
+    return randomList;
 }
 
 // Generates a new City object with the given width
 // skyProbability is the chance that any cell in the sky has 
 export default function generateCity(
-        width: number, 
-        height: number, 
-        skyProbability: number
-    ) : City {
-        const weather = getRandomListElement<string>(weatherTypes);
-        const sun = getRandomListElement<number>(sunMoonElements[weather]);
-        const sky = makeRandomList<number>(
-            skyElements[weather], 
-            (width * height) - 2, 
-            skyProbability
-        );
-        const city = makeRandomList<number>(buildings, width);
-        
-        return {
-            weather: weather,
-            sun: sun,
-            sky: [],
-            buildings: city,
-        }
+    width: number, 
+    height: number, 
+    skyProbability: number
+) : City {
+    const weather = getRandomListElement<string>(weatherTypes);
+    const sun = getRandomListElement<number>(sunMoonElements[weather]);
+    const sky = makeRandomList<number>(
+        skyElements[weather], 
+        (width * height) - 2, 
+        skyProbability
+    );
+    const city = makeRandomList<number>(buildings, width);
+    
+    return {
+        weather: weather,
+        sun: sun,
+        sky: [],
+        buildings: city,
+    }
 }
