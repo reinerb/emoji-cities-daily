@@ -1,6 +1,6 @@
 export type City = {
     weather: string;
-    sun: string;
-    sky: string[];
-    buildings: string[];
+    sun: number;
+    sky: (number | null)[];
+    buildings: (number | null)[];
 }
